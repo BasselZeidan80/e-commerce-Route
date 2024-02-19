@@ -8,6 +8,7 @@ import SignUp from "./Components/Signup/SignUp";
 import NotFound from "./Components/NotFound/NotFound";
 import Brand from "./Components/Brands/Brand";
 import Categories from "./Components/Categories/Categories";
+import CounterContextProvider from "./Context/CounterContext";
 
 function App() {
   const myRouter = createBrowserRouter([
@@ -29,7 +30,15 @@ function App() {
 
   return (
     <div className="App">
-      <RouterProvider router={myRouter} />
+
+
+<CounterContextProvider >
+
+<RouterProvider router={myRouter} />
+
+
+</CounterContextProvider>
+
     </div>
   );
 }

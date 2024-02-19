@@ -4,7 +4,7 @@ import imgs from "../../images/freshcart-logo.svg";
 export default function Footer() {
   return (
     <>
-      <div className="footer">
+      <div className="footer ">
         <div className="container ">
           <h3>Get The FreshCart app</h3>
           <p>

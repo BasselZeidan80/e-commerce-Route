@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../images/freshcart-logo.svg";
 import "./Navbar.css";
+import { AuthContextProvider } from "../../Context/AuthContext";
 export default function Navbar() {
+  
+// const {token} = useContext(AuthContextProvider)
+
+
+// console.log("token" , token);
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-light p-3">
@@ -25,7 +32,8 @@ export default function Navbar() {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" to="/">
-                  Home
+                  Home 
+                
                 </Link>
               </li>
               <li className="nav-item">
