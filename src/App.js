@@ -8,7 +8,8 @@ import SignUp from "./Components/Signup/SignUp";
 import NotFound from "./Components/NotFound/NotFound";
 import Brand from "./Components/Brands/Brand";
 import Categories from "./Components/Categories/Categories";
-import CounterContextProvider from "./Context/CounterContext";
+import AuthContextPProvider from "./Context/AuthContext";
+import Guard from "./Components/Guard/Guard";
 
 function App() {
   const myRouter = createBrowserRouter([
@@ -16,13 +17,13 @@ function App() {
       path: "/",
       element: <Layout />,
       children: [
-        { index: true, element: <Products /> },
-        { path: "Cart", element: <Cart /> },
+        { index: true, element: <Guard><Products /> </Guard>  },
+        { path: "Cart", element: <Guard><Cart /> </Guard>   },
         { path: "Login", element: <Login /> },
         { path: "SignUp", element: <SignUp /> },
         { path: "Brand", element: <Brand /> },
-        { path: "Categories", element: <Categories /> },
-        { path: "Products", element: <Products /> },
+        { path: "Categories", element: <Guard><Categories /> </Guard>   },
+        { path: "Products", element:<Guard><Products /> </Guard>  },
         { path: "*", element: <NotFound /> },
       ],
     },
@@ -32,12 +33,10 @@ function App() {
     <div className="App">
 
 
-<CounterContextProvider >
-
+<AuthContextPProvider >
 <RouterProvider router={myRouter} />
+</AuthContextPProvider>
 
-
-</CounterContextProvider>
 
     </div>
   );

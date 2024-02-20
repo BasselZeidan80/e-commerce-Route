@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { InfinitySpin, RotatingLines } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup'
+import { AuthContextProvider } from "../../Context/AuthContext";
 
 
 // schema from yup to handle vaidation if need it
@@ -29,6 +30,8 @@ const [isWrong , setIswrong] = useState(undefined)
 const navigate = useNavigate()
 
 
+const {setToken} =  useContext(AuthContextProvider)
+
 const userData = {
   
   email:'',
@@ -45,9 +48,15 @@ try {
   
   const res = await axios.post('https://ecommerce.routemisr.com/api/v1/auth/signin' , userData)
 
+  localStorage.setItem( "token" , res.data.token)
+  setToken(res.data.token)
   
   console.log(res.data);
+console.log(res.data.token);
+if(res.data.message == "success"){
 
+
+  
 setIsSuccess(true)
 
 setTimeout( ()=>{
@@ -56,6 +65,10 @@ setTimeout( ()=>{
   
 },2000 )
 setIsClicked(false)
+
+}
+
+
 
 
 } catch (error) {
@@ -78,6 +91,8 @@ function onSubmit(values){
 
 setIsClicked(true)
   sendUserData(values)
+
+  
 }
 
 

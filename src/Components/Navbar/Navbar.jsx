@@ -1,14 +1,19 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../images/freshcart-logo.svg";
 import "./Navbar.css";
 import { AuthContextProvider } from "../../Context/AuthContext";
 export default function Navbar() {
   
-// const {token} = useContext(AuthContextProvider)
+const {token , setToken} = useContext(AuthContextProvider)
+const Navigate =useNavigate()
+function logoutFunction(){
 
-
-// console.log("token" , token);
+  setToken(null)
+  localStorage.removeItem('token')
+  Navigate('/Login')
+}
+// console.log("token in navbar" , token);
 
   return (
     <>
@@ -29,7 +34,7 @@ export default function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            {token? <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" to="/">
                   Home 
@@ -56,18 +61,20 @@ export default function Navbar() {
                   Brand
                 </Link>
               </li>
-            </ul>
+            </ul> : ""}
+           
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center cstIcons ">
               <i className="fa-brands fa-facebook"></i>
               <i className="fa-brands fa-instagram"></i>
               <i className="fa-brands fa-linkedin"></i>
               <i className="fa-brands fa-twitter"></i>
 
-              <li className="nav-item">
-                <Link className="nav-link" to="/Logout">
+              {token? <li className="nav-item">
+                <button onClick={logoutFunction} className="nav-link" >
                   Logout
-                </Link>
-              </li>
+                </button>
+              </li>: <>
+              
               <li className="nav-item">
                 <Link className="nav-link" to="/Login">
                   Login
@@ -78,6 +85,9 @@ export default function Navbar() {
                   Signup
                 </Link>
               </li>
+              </>}
+             
+             
             </ul>
           </div>
         </div>
