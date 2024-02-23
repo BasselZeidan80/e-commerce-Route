@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import { Navigate, useParams } from 'react-router-dom'
 import { CartContext } from '../../Context/CartContext';
 import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
 
 export default function ProductDetails() {
  const {addProductToCart} = useContext(CartContext)
@@ -16,14 +17,17 @@ async function addProduct(id){
 
  if(res=== data.data.message){
 console.log("congrats add success");
-Swal.fire({
-  position: "center",
-  icon: "success",
-  title: "Your Product has been added To Cart",
-  showConfirmButton: false,
-  timer: 1500
-});
+
+toast.success('Your Product has been added Successfully' ,{duration: 3000 , position: "top-right"})
+ }else{
+  toast.error('Error try again later' ,{duration: 3000 , position: "top-right"})
+
  }
+
+
+
+
+
 
 }
 

@@ -13,6 +13,7 @@ import Guard from "./Components/Guard/Guard";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
 import { QueryClient, QueryClientProvider } from "react-query";
 import CartContextProvider from "./Context/CartContext";
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -41,13 +42,14 @@ function App() {
 
 
 <QueryClientProvider client={myQuery}>
-<CartContextProvider >
 <AuthContextPProvider >
+<CartContextProvider >
 <RouterProvider router={myRouter} />
-</AuthContextPProvider>
 </CartContextProvider>
+</AuthContextPProvider>
 </QueryClientProvider>
 
+<Toaster />
     </div>
   );
 }

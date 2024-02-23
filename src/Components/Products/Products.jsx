@@ -68,7 +68,7 @@ if(isLoading){
   return (
     <>
 
-{ <div className="container ">
+{ <div className="w-75 m-auto  ">
 
   <div className="row my-4">
 

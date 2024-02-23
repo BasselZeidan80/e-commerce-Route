@@ -1,0 +1,15 @@
+.PRDDESIGN {
+    background-color: #d0cece55;
+    border-bottom: 1px solid #0000003c;
+    border-radius: 10px 10px 0 0;
+}
+
+.CSTPRICE {
+    /* background-color: #11420c84; */
+    width: 20%;
+    /* text-align: center; */
+    margin: 30px 0;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 30px;
+}
