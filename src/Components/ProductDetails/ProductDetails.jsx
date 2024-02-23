@@ -14,7 +14,7 @@ export default function ProductDetails() {
 
   }
 
-  const {isLoading , isError  , data} =  useQuery("productDetails", getProductDetails)
+  const {isLoading , isError  , data} =  useQuery(`productDetails-${id}`, getProductDetails)
 
 
 
@@ -65,7 +65,7 @@ export default function ProductDetails() {
         <p>{productid.description}</p>
         <div className="d-flex justify-content-between mt-5">
         <p className='text-success fw-bold fs-5' > price: {productid.price} $</p>
-        <p className=' text-danger fw-bold fs-5'> Remain Quantity: {productid.quantity} $</p>
+        <p className=' text-danger fw-bold fs-5'> Remain Quantity: {productid.quantity} </p>
         </div>
         <button className='btn btn-success w-100 mt-5 '>Add To Cart +</button>
       </article>
