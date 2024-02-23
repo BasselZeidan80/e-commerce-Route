@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { Circles } from 'react-loader-spinner';
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 export default function ProductDetails() {
   const {id}= useParams()
@@ -14,15 +14,17 @@ export default function ProductDetails() {
 
   }
 
-  const {isLoading , isError , data} =  useQuery("productDetailsID", getProductDetails)
+  const {isLoading , isError  , data} =  useQuery("productDetails", getProductDetails)
 
-  console.log("prdId" , data.data.data);
 
+
+  // console.log("prdId" , data.data.data);
+  
   // const productId = data.data.data
   // console.log (  productId );
-  const productid= data.data.data;
-  console.log("prDetails " , productid);
-
+  // const productid= data.data.data;
+  // console.log("prDetails " , productid);
+  
   if(isLoading){
     return <div className="d-flex vh-100 bg-primary bg-opacity-50 justify-content-center align-items-center">
   
@@ -41,9 +43,12 @@ export default function ProductDetails() {
   </div>
   }
   
-
-
-
+  if(isError){
+    return <Navigate to='/Products' />
+  }
+  
+  
+  let productid = data.data.data
   return <>
   
 <div className="container ">
