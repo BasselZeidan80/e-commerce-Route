@@ -7,36 +7,43 @@ import { useQuery } from "react-query";
 
 import HomeSlider from "../HomeSlider/HomeSlider";
 import CategorySlider from "../CategorySlide/CategorySlider";
+import { CartContext } from "../../Context/CartContext";
+import Swal from "sweetalert2";
 
 
 export default function Products() {
 
-  const [products, setProducts] = useState(null)
+  // const [products, setProducts] = useState(null)
 
+   const {addProductToCart} =  useContext(CartContext)
 
+  async function addProduct(id){
+   const res= await addProductToCart(id)
+   if(res=== data.data.message){
+    console.log("product add successful");
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Your Product has been added To Cart",
+      showConfirmButton: false,
+      timer: 1500
+    });
+   }
+
+   }
 
   async function getProducts(){
     return await axios.get('https://ecommerce.routemisr.com/api/v1/products')
-    // const res =   axios.get('https://ecommerce.routemisr.com/api/v1/products')
-    // .then((response)=> {
-      //   console.log(response.data.data)
-      //   setProducts(response.data.data)
-      // })
-      // .catch((err)=> {
-        //   console.log("err " ,  err);
-        // })
+   
       }
-      
+
  const {isError , isLoading , isFetching , data}=useQuery('getAllProducts' ,getProducts)
 
  console.log(isError , "iserror");
  console.log(isLoading , "isLoading");
  console.log(isFetching , "isFetching");
- console.log(data, "data");
-// useEffect(()=> {
-// getProducts()
-// },[] )
-
+//  console.log(data, "data");
+ 
 
 
 if(isLoading){
@@ -89,7 +96,7 @@ if(isLoading){
   </div>
   <CategorySlider />
       <div className="row p-3 gy-3">
-        {data.data.data.map(  (product , idx) =>   <div key={idx} className=" col-sm-12 col-md-6 col-lg-2 mb-3 cstom  ">
+        {data.data.data.map(  (product , idx) =>   <div key={idx} className=" col-sm-12 col-md-6 col-lg-2 mb-3 cstom">
           <div  className="product"  >
           <Link to={`/ProductDetails/${product.id}`}>
           <figure >
@@ -107,7 +114,7 @@ if(isLoading){
          
           <span><i className="fa-solid fa-star text-warning"></i>{product.ratingsAverage} </span>
           </div>
-          <button className="btn btn-success w-100">Add +</button>
+          <button onClick={() => addProduct(product.id)} className=" addBtn  btn btn-success w-100">Add +</button>
         </div>
         </div>
         )}

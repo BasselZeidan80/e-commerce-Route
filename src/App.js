@@ -12,6 +12,7 @@ import AuthContextPProvider from "./Context/AuthContext";
 import Guard from "./Components/Guard/Guard";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
 import { QueryClient, QueryClientProvider } from "react-query";
+import CartContextProvider from "./Context/CartContext";
 
 
 
@@ -40,10 +41,11 @@ function App() {
 
 
 <QueryClientProvider client={myQuery}>
-
+<CartContextProvider >
 <AuthContextPProvider >
 <RouterProvider router={myRouter} />
 </AuthContextPProvider>
+</CartContextProvider>
 </QueryClientProvider>
 
     </div>

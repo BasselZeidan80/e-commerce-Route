@@ -1,10 +1,33 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { Circles } from 'react-loader-spinner';
 import { useQuery } from 'react-query';
 import { Navigate, useParams } from 'react-router-dom'
+import { CartContext } from '../../Context/CartContext';
+import Swal from 'sweetalert2';
 
 export default function ProductDetails() {
+ const {addProductToCart} = useContext(CartContext)
+// console.log("addProductToCart " ,addProductToCart);
+
+
+async function addProduct(id){
+ const res= await addProductToCart(id)
+
+ if(res=== data.data.message){
+console.log("congrats add success");
+Swal.fire({
+  position: "center",
+  icon: "success",
+  title: "Your Product has been added To Cart",
+  showConfirmButton: false,
+  timer: 1500
+});
+ }
+
+}
+
+
   const {id}= useParams()
   console.log(id);
 
@@ -17,14 +40,7 @@ export default function ProductDetails() {
   const {isLoading , isError  , data} =  useQuery(`productDetails-${id}`, getProductDetails)
 
 
-
-  // console.log("prdId" , data.data.data);
-  
-  // const productId = data.data.data
-  // console.log (  productId );
-  // const productid= data.data.data;
-  // console.log("prDetails " , productid);
-  
+ 
   if(isLoading){
     return <div className="d-flex vh-100 bg-primary bg-opacity-50 justify-content-center align-items-center">
   
@@ -66,8 +82,9 @@ export default function ProductDetails() {
         <div className="d-flex justify-content-between mt-5">
         <p className='text-success fw-bold fs-5' > price: {productid.price} $</p>
         <p className=' text-danger fw-bold fs-5'> Remain Quantity: {productid.quantity} </p>
+        {/* <p>{productid.id}</p> */}
         </div>
-        <button className='btn btn-success w-100 mt-5 '>Add To Cart +</button>
+        <button onClick={() => addProduct(productid.id)} className='btn btn-success w-100 mt-5 '>Add To Cart +</button>
       </article>
     </div>
   </div>
