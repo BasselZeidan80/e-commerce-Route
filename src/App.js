@@ -10,8 +10,13 @@ import Brand from "./Components/Brands/Brand";
 import Categories from "./Components/Categories/Categories";
 import AuthContextPProvider from "./Context/AuthContext";
 import Guard from "./Components/Guard/Guard";
+import ProductDetails from "./Components/ProductDetails/ProductDetails";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+
 
 function App() {
+  const myQuery = new QueryClient()
   const myRouter = createBrowserRouter([
     {
       path: "/",
@@ -24,6 +29,7 @@ function App() {
         { path: "Brand", element: <Brand /> },
         { path: "Categories", element: <Guard><Categories /> </Guard>   },
         { path: "Products", element:<Guard><Products /> </Guard>  },
+        { path: "ProductDetails/:id", element:<Guard><ProductDetails /> </Guard>  },
         { path: "*", element: <NotFound /> },
       ],
     },
@@ -33,10 +39,12 @@ function App() {
     <div className="App">
 
 
+<QueryClientProvider client={myQuery}>
+
 <AuthContextPProvider >
 <RouterProvider router={myRouter} />
 </AuthContextPProvider>
-
+</QueryClientProvider>
 
     </div>
   );
