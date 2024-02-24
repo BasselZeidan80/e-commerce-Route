@@ -60,8 +60,8 @@ const flag = await  axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${id}
   }
 }).then(   (res)=>{
 
-  setNumOfCart(res.data.numOfCartItems)
-
+  
+setNumOfCart(res.data.numOfCartItems)
 setTotalCartPrice(res.data.data.totalCartPrice)
 setAllProducts(res.data.data.products)
 return true
@@ -74,7 +74,50 @@ console.log( "err" , err  );
  return flag
 }
 
-  return <CartContext.Provider value={{addProductToCart,numOfCart,totalCartPrice,allProducts ,updateProduct}}>
+
+async function deleteProduct(id){
+  const flag= await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}` ,{headers:{token: localStorage.getItem("token")}})
+  .then(  
+    (res)=>{
+
+      setNumOfCart(res.data.numOfCartItems)
+      setTotalCartPrice(res.data.data.totalCartPrice)
+      setAllProducts(res.data.data.products)
+      return true;
+    }
+  ).catch(  
+    (err)=>{
+console.log("err " ,err);
+return false
+    }
+  )
+return flag
+}
+
+ 
+  async function clearAllProducts(){
+  const flag= await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart` ,{headers:{token: localStorage.getItem("token")}})
+  .then(  
+    (res)=>{
+
+      console.log("resData " , res);
+      setNumOfCart(0)
+      setTotalCartPrice(0)
+      setAllProducts([])
+      return true;
+    }
+  ).catch(  
+    (err)=>{
+console.log("err " ,err);
+return false
+    }
+  )
+return flag
+}
+
+
+
+  return <CartContext.Provider value={{addProductToCart,numOfCart,totalCartPrice,allProducts ,updateProduct,deleteProduct,clearAllProducts}}>
   {children}
   
   </CartContext.Provider>

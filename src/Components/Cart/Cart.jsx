@@ -3,9 +3,10 @@ import { CartContext } from "../../Context/CartContext";
 import './Cart.css'
 import { Circles } from "react-loader-spinner";
 import toast from "react-hot-toast";
+import CartEmpty from "../CartEmpty/CartEmpty";
 export default function Cart() {
 
-const {addProductToCart ,numOfCart,totalCartPrice,allProducts ,updateProduct} =  useContext(CartContext)
+const {addProductToCart ,numOfCart,totalCartPrice,allProducts ,updateProduct ,deleteProduct,clearAllProducts} =  useContext(CartContext)
 console.log(allProducts);
 
 
@@ -39,13 +40,35 @@ toast.error("error try again later" , {position:"top-center"})
    }
 }
 
+ async function deleteMyProduct(id){
+  const res= await deleteProduct(id)
+  if(res){
+    toast.success("removed successfully", {position:"top-center"})
+  }else{
+toast.error("error try again later" , {position:"top-center"})
+
+  }
+
+}
+
+
+ async function clearMyProducts(){
+   const res = await clearAllProducts()
+   if(res){
+    toast.success(" All removed successfully", {position:"top-center"})
+  }else{
+toast.error("error try again later" , {position:"top-center"})
+
+  }
+}
+
   return (
     <>
-     <div className="container">
+    {allProducts.length? <div className="container">
       <h2 className="mt-4">Shop Cart</h2>
       <p className="CSTPRICE">Total Cart Price: {totalCartPrice} LE</p>
 
-
+      <button onClick={()=> clearMyProducts()} className="btn btn-outline-danger mb-3">Clear All</button>
 {allProducts?.map( (product , idx)=>  <div key={idx} className="row PRDDESIGN  p-3">
         <div className="col-1">
           <figure>
@@ -55,7 +78,7 @@ toast.error("error try again later" , {position:"top-center"})
         <div className="col-9">
           <h4>{product.product.title}</h4>
           <p className="text-success fw-bold">price: {product.price} LE</p>
-          <button className="btn btn-danger">Remove</button>
+          <button onClick={()=> deleteMyProduct(product.product.id)} className="btn btn-danger">Remove</button>
         </div>
         <div className="col-2">
           <div className="d-flex align-items-center justify-content-between">
@@ -66,7 +89,9 @@ toast.error("error try again later" , {position:"top-center"})
         </div>
       </div> )}
      
-     </div>
+     </div> : <CartEmpty />}
+
+    
     </>
   );
 }
